@@ -16,7 +16,7 @@
             android:title="@string/action_workflow" />
     </group>
 
-    <item android:title="@string/comunicar">
+    <item android:title="@string/sistema">
         <menu>
             <item
                 android:id="@+id/nav_quit"

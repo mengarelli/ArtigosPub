@@ -18,8 +18,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="comunicar">Comunicar</string>
-    <string name="compartilhar">Compartilhar</string>
     <string name="action_artigos">Artigos</string>
     <string name="action_search">Pesquisar</string>
     <string name="search_hint">Pesquisar</string>
@@ -34,4 +32,8 @@
     <string name="delete_sucess">Item excluído com sucesso!</string>
     <string name="quit">Encerrar</string>
     <string name="confirm_quit">Confirma encerrar?</string>
+    <string name="sistema">Sistema</string>
+    <string name="filter">Pesquisa</string>
+    <string name="clear_filter">Limpar</string>
+    <string name="discard">Descartar</string>
 </resources>

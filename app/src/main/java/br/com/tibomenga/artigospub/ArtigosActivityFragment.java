@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ public class ArtigosActivityFragment extends Fragment implements ISearchable {
     private LinkedList<Artigo> lstArtigosContent = new LinkedList<>();
     private String searchString = null;
     private ArtigoController controller;
+    private View frameArtigos = null;
+    Snackbar snackbar = null;
 
     public ArtigosActivityFragment() {
     }
@@ -56,6 +59,7 @@ public class ArtigosActivityFragment extends Fragment implements ISearchable {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_artigos, container, false);
+        frameArtigos = (View) rootView.findViewById(R.id.frame_artigos);
         artigosArrayAdapter = new ArtigosAdapter(getActivity(), lstArtigosShow);
         listView = (ListView) rootView.findViewById(R.id.listview_artigos);
         listView.setAdapter(artigosArrayAdapter);
@@ -89,8 +93,9 @@ public class ArtigosActivityFragment extends Fragment implements ISearchable {
     public void refresh() {
         lstArtigosShow.clear();
         if (searchString != null) {
+            String string = searchString.toLowerCase();
             for (Artigo artigo : lstArtigosContent) {
-                if (artigo.getNome().toLowerCase().contains(searchString)) {
+                if (artigo.getNome().toLowerCase().contains(string)) {
                     lstArtigosShow.add(artigo);
                 }
             }
@@ -99,6 +104,7 @@ public class ArtigosActivityFragment extends Fragment implements ISearchable {
         }
         if (artigosArrayAdapter != null) {
             artigosArrayAdapter.notifyDataSetChanged();
+            showSearchInfo();
         }
     }
 
@@ -134,6 +140,24 @@ public class ArtigosActivityFragment extends Fragment implements ISearchable {
             pos = lstArtigosShow.indexOf(artigo);
             if (pos >= 0) {
                 listView.setSelection(pos);
+            }
+        }
+    }
+
+    public void showSearchInfo() {
+        if (listView != null) {
+            if (snackbar != null) {
+                snackbar.dismiss();
+            }
+            if ((searchString != null) && (!searchString.isEmpty())) {
+                snackbar = Snackbar.make(frameArtigos, getString(R.string.filter) + ": " + searchString, Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction(R.string.clear_filter, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        search(null);
+                    }
+                });
+                snackbar.show();
             }
         }
     }

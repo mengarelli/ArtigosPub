@@ -17,6 +17,7 @@ import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.Artig
 import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_NOME;
 import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_STATUS_WORKFLOW;
 import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_VERSAO_ATUAL;
+import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry._ID;
 
 /**
  * Created by menga on 26/09/17.
@@ -33,8 +34,15 @@ public class ArtigoController {
     }
 
     public int insert(Artigo artigo) {
+        return insert(artigo, false);
+    }
+
+    public int insert(Artigo artigo, boolean withId) {
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        if (withId) {
+            values.put(_ID, artigo.getId());
+        }
         values.put(COLUMN_NAME_AUTOR, artigo.getAutor());
         values.put(COLUMN_NAME_COMENTARIOS, artigo.getComentarios());
         values.put(COLUMN_NAME_DATA_INICIAL, DataUtil.formatDateSQL(artigo.getDataInicial()));
