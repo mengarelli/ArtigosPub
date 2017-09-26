@@ -11,4 +11,27 @@
     <string name="versao_documento">Versão do Documento</string>
     <string name="autor">Autor</string>
     <string name="valor_invalido">Valor Inválido!</string>
+    <string name="action_destinos">Destinos de publicação</string>
+    <string name="action_workflow">Workflow</string>
+    <string name="action_versoes">Versões de Documentos</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="comunicar">Comunicar</string>
+    <string name="compartilhar">Compartilhar</string>
+    <string name="action_artigos">Artigos</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="search_hint">Pesquisar</string>
+    <string name="comentarios">Comentários</string>
+    <string name="data_limite">Data Limite</string>
+    <string name="action_delete">Excluir</string>
+    <string name="delete_item">Excluir Item</string>
+    <string name="confirm_delete_item">Confirma a exclusão do item?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="save_sucess">Item gravado com sucesso!</string>
+    <string name="delete_sucess">Item excluído com sucesso!</string>
+    <string name="quit">Encerrar</string>
+    <string name="confirm_quit">Confirma encerrar?</string>
 </resources>

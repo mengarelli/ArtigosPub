@@ -1,0 +1,6 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="ic_menu_artigos" type="drawable">@drawable/ic_school_black_24dp</item>
+    <item name="ic_menu_destinos" type="drawable">@android:drawable/ic_menu_myplaces</item>
+    <item name="ic_menu_workflow" type="drawable">@android:drawable/ic_menu_compass</item>
+    <item name="ic_menu_quit" type="drawable">@android:drawable/ic_menu_close_clear_cancel</item>
+</resources>

@@ -3,36 +3,33 @@ package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by menga on 25/09/17.
  */
 
 public class Artigo implements Serializable {
-    private String uuid;
+    private long id;
     private String nome;
     private String autor;
     private Date dataInicial;
+    private Date dataLimite;
     private String comentarios;
-    private String statusWorkflow;
+    private int statusWorkflow;
     private String destinoPublicacao;
     private String versaoAtual;
 
     public Artigo() {
         setDataInicial(Calendar.getInstance().getTime());
-        getUuid();
+        setDataLimite(Calendar.getInstance().getTime());
     }
 
-    public String getUuid() {
-        if (uuid == null) {
-            uuid = UUID.randomUUID().toString();
-        }
-        return uuid;
+    public long getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getVersaoAtual() {
@@ -63,6 +60,14 @@ public class Artigo implements Serializable {
         return dataInicial;
     }
 
+    public void setDataLimite(Date dataLimite) {
+        this.dataLimite = dataLimite;
+    }
+
+    public Date getDataLimite() {
+        return dataLimite;
+    }
+
     public void setDataInicial(Date dataInicial) {
         this.dataInicial = dataInicial;
     }
@@ -75,13 +80,9 @@ public class Artigo implements Serializable {
         this.comentarios = comentarios;
     }
 
-    public String getStatusWorkflow() {
-        return statusWorkflow;
-    }
+    public int getStatusWorkflow() { return statusWorkflow; }
 
-    public void setStatusWorkflow(String statusWorkflow) {
-        this.statusWorkflow = statusWorkflow;
-    }
+    public void setStatusWorkflow(int statusWorkflow) { this.statusWorkflow = statusWorkflow; }
 
     public String getDestinoPublicacao() {
         return destinoPublicacao;
@@ -92,18 +93,33 @@ public class Artigo implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Artigo{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", autor='" + autor + '\'' +
+                ", dataInicial=" + dataInicial +
+                ", dataLimite=" + dataLimite +
+                ", comentarios='" + comentarios + '\'' +
+                ", statusWorkflow=" + statusWorkflow +
+                ", destinoPublicacao='" + destinoPublicacao + '\'' +
+                ", versaoAtual='" + versaoAtual + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Artigo artigo = (Artigo) o;
 
-        return getUuid().equals(artigo.getUuid());
+        return getId() == artigo.getId();
 
     }
 
     @Override
     public int hashCode() {
-        return uuid.hashCode();
+        return (int) (id ^ (id >>> 32));
     }
 }

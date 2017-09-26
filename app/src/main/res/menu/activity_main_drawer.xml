@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_artigos"
+            android:icon="@drawable/ic_menu_artigos"
+            android:title="@string/action_artigos" />
+        <!--<item
+            android:id="@+id/nav_destino"
+            android:icon="@drawable/ic_menu_destinos"
+            android:title="@string/action_destinos" />-->
+        <item
+            android:id="@+id/nav_workflow"
+            android:icon="@drawable/ic_menu_workflow"
+            android:title="@string/action_workflow" />
+    </group>
+
+    <item android:title="@string/comunicar">
+        <menu>
+            <item
+                android:id="@+id/nav_quit"
+                android:icon="@drawable/ic_menu_quit"
+                android:title="@string/quit" />
+        </menu>
+    </item>
+
+</menu>

@@ -15,20 +15,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.Artigo;
+import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoController;
 import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
+import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ISearchable;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ArtigosActivityFragment extends Fragment {
+public class ArtigosActivityFragment extends Fragment implements ISearchable {
     private ArtigosAdapter artigosArrayAdapter = null;
-    private LinkedList<Artigo> lstArtigos = new LinkedList<>();
+    private LinkedList<Artigo> lstArtigosShow = new LinkedList<>();
     private ListView listView;
+    private LinkedList<Artigo> lstArtigosContent = new LinkedList<>();
+    private String searchString = null;
+    private ArtigoController controller;
 
     public ArtigosActivityFragment() {
     }
@@ -36,11 +42,13 @@ public class ArtigosActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        controller = new ArtigoController(getContext());
 //        artigosArrayAdapter.clear();
 //        artigosArrayAdapter.addAll(DataUtil.createFakeListArtigos(10));
-        if (lstArtigos.size() == 0) {
-            lstArtigos.addAll(DataUtil.createFakeListArtigos(10));
-            artigosArrayAdapter.notifyDataSetChanged();
+        if (lstArtigosContent.size() == 0) {
+            //lstArtigosContent.addAll(DataUtil.createFakeListArtigos(10));
+            lstArtigosContent.addAll(controller.list());
+            refresh();
         }
     }
 
@@ -48,7 +56,7 @@ public class ArtigosActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_artigos, container, false);
-        artigosArrayAdapter = new ArtigosAdapter(getActivity(), lstArtigos);
+        artigosArrayAdapter = new ArtigosAdapter(getActivity(), lstArtigosShow);
         listView = (ListView) rootView.findViewById(R.id.listview_artigos);
         listView.setAdapter(artigosArrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,20 +86,55 @@ public class ArtigosActivityFragment extends Fragment {
         return rootView;
     }
 
+    public void refresh() {
+        lstArtigosShow.clear();
+        if (searchString != null) {
+            for (Artigo artigo : lstArtigosContent) {
+                if (artigo.getNome().toLowerCase().contains(searchString)) {
+                    lstArtigosShow.add(artigo);
+                }
+            }
+        } else {
+            lstArtigosShow.addAll(lstArtigosContent);
+        }
+        if (artigosArrayAdapter != null) {
+            artigosArrayAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_FIRST_USER) {
+            // delete
             Artigo artigo = (Artigo) data.getSerializableExtra(Intent.ACTION_ATTACH_DATA);
-            int pos = lstArtigos.indexOf(artigo);
+            int pos = lstArtigosContent.indexOf(artigo);
             if (pos >= 0) {
-                lstArtigos.set(pos, artigo);
-            } else {
-                lstArtigos.add(artigo);
-                pos = lstArtigos.size() - 1;
+                controller.delete(artigo);
+                lstArtigosContent.remove(artigo);
             }
-            artigosArrayAdapter.notifyDataSetChanged();
-            listView.setSelection(pos);
+            Toast toast = Toast.makeText(getContext(), getString(R.string.delete_sucess), Toast.LENGTH_SHORT);
+            toast.show();
+            refresh();
+        } else if (resultCode == Activity.RESULT_OK) {
+            // insert or update
+            Artigo artigo = (Artigo) data.getSerializableExtra(Intent.ACTION_ATTACH_DATA);
+            int pos = lstArtigosContent.indexOf(artigo);
+            if (pos >= 0) {
+                controller.update(artigo);
+                lstArtigosContent.set(pos, artigo);
+            } else {
+                controller.insert(artigo);
+                lstArtigosContent.add(artigo);
+                pos = lstArtigosContent.size() - 1;
+            }
+            Toast toast = Toast.makeText(getContext(), getString(R.string.save_sucess), Toast.LENGTH_SHORT);
+            toast.show();
+            refresh();
+            pos = lstArtigosShow.indexOf(artigo);
+            if (pos >= 0) {
+                listView.setSelection(pos);
+            }
         }
     }
 
@@ -111,10 +154,16 @@ public class ArtigosActivityFragment extends Fragment {
             ((TextView) convertView.findViewById(R.id.tv_nome_artigo)).setText(artigo.getNome());
             ((TextView) convertView.findViewById(R.id.tv_destino_publicacao)).setText(artigo.getDestinoPublicacao());
             ((TextView) convertView.findViewById(R.id.tv_data_inicio)).setText(getString(R.string.inicio) + ": " + DataUtil.formatDate(artigo.getDataInicial()));
-            ((TextView) convertView.findViewById(R.id.tv_status_workflow)).setText(getString(R.string.status) + ": " + artigo.getStatusWorkflow());
+            ((TextView) convertView.findViewById(R.id.tv_status_workflow)).setText(getString(R.string.status) + ": " + DataUtil.getWorkflowDescription(artigo.getStatusWorkflow()));
             ((TextView) convertView.findViewById(R.id.tv_versao_atual)).setText(getString(R.string.versao_documento) + ": " + artigo.getVersaoAtual());
             //((TextView) convertView.findViewById(R.id.tv_)).setText(artigo.get);
             return convertView;
         }
+    }
+
+    @Override
+    public void search(String string) {
+        searchString = string;
+        refresh();
     }
 }
