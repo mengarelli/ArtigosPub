@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fr_artigo_edit"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/margin_small"
+    >
+    <TextView
+        android:id="@+id/tv_nome_artigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/nome_artigo"/>
+
+    <EditText
+        android:id="@+id/et_nome_artigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome do Artigo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/destino_publicacao"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/et_destino_publicacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Destino"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/data_inicial"/>
+
+    <EditText
+        android:id="@+id/et_data_inicial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:text="dd/MM/yyyy"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/status_workflow"/>
+
+    <Spinner
+        android:id="@+id/sp_status_workflow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/workflow_entries"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/versao_documento"/>
+
+    <EditText
+        android:id="@+id/et_versao_atual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DocumentoX.doc"/>
+
+
+</LinearLayout>

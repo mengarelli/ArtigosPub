@@ -1,6 +1,8 @@
 package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
 
-import java.text.DateFormat;
+import android.content.Context;
+import android.text.format.DateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -11,6 +13,7 @@ import java.util.List;
  */
 
 public class DataUtil {
+    private static Context context = null;
     public static List<Artigo> createFakeListArtigos(int quant) {
         Artigo art;
         LinkedList<Artigo> lst = new LinkedList<>();
@@ -22,13 +25,17 @@ public class DataUtil {
             art.setDestinoPublicacao("Journal of Computer Science");
             art.setNome("Artigo Bla Bla Bla " + i);
             art.setStatusWorkflow("Inicial");
-            art.setVersaoAtual("Docomento v" + i + ".doc");
+            art.setVersaoAtual("Documento v" + i + ".doc");
             lst.add(art);
         }
         return lst;
     }
 
     public static String formatDate(Date date) {
-        return DateFormat.getDateInstance().format(date);
+        return DateFormat.getDateFormat(context).format(date);
+    }
+
+    public static void setContext(Context appContext) {
+        context = appContext;
     }
 }

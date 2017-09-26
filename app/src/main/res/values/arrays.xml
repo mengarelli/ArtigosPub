@@ -1,0 +1,13 @@
+<resources>
+    <array name="workflow_entries">
+        <item>Inicial</item>
+        <item>Em Redação</item>
+        <item>Pronto</item>
+        <item>Traduzindo</item>
+        <item>Traduzido</item>
+        <item>Submetido</item>
+        <item>Recusado</item>
+        <item>Em Revisão</item>
+        <item>Aceito</item>
+    </array>
+</resources>

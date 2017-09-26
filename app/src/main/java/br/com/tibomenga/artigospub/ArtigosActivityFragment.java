@@ -1,6 +1,7 @@
 package br.com.tibomenga.artigospub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +47,11 @@ public class ArtigosActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Artigo item = (Artigo) artigosArrayAdapter.getItem(i);
-                Toast toast = Toast.makeText(getContext(), item.getNome(), Toast.LENGTH_SHORT);
-                toast.show();
-//                Intent intent = new Intent(getActivity(), DetailActivity.class)
-//                        .putExtra(Intent.EXTRA_TEXT, item);
-//                startActivity(intent);
+//                Toast toast = Toast.makeText(getContext(), item.getNome(), Toast.LENGTH_SHORT);
+//                toast.show();
+                Intent intent = new Intent(getActivity(), ArtigoEditActivity.class)
+                        .putExtra(Intent.ACTION_ATTACH_DATA, item);
+                startActivity(intent);
             }
         });
 
@@ -73,9 +73,9 @@ public class ArtigosActivityFragment extends Fragment {
             }
             ((TextView) convertView.findViewById(R.id.tv_nome_artigo)).setText(artigo.getNome());
             ((TextView) convertView.findViewById(R.id.tv_destino_publicacao)).setText(artigo.getDestinoPublicacao());
-            ((TextView) convertView.findViewById(R.id.tv_data_inicio)).setText(getString(R.string.inicio) + DataUtil.formatDate(artigo.getDataInicial()));
-            ((TextView) convertView.findViewById(R.id.tv_status_workflow)).setText(getString(R.string.status) + artigo.getStatusWorkflow());
-            ((TextView) convertView.findViewById(R.id.tv_versao_atual)).setText(getString(R.string.status) + artigo.getVersaoAtual());
+            ((TextView) convertView.findViewById(R.id.tv_data_inicio)).setText(getString(R.string.inicio) + ": " + DataUtil.formatDate(artigo.getDataInicial()));
+            ((TextView) convertView.findViewById(R.id.tv_status_workflow)).setText(getString(R.string.status) + ": " + artigo.getStatusWorkflow());
+            ((TextView) convertView.findViewById(R.id.tv_versao_atual)).setText(getString(R.string.versao_documento) + ": " + artigo.getVersaoAtual());
             //((TextView) convertView.findViewById(R.id.tv_)).setText(artigo.get);
             return convertView;
         }

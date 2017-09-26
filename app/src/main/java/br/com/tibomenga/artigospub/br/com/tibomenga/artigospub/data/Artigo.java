@@ -1,12 +1,14 @@
 package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by menga on 25/09/17.
  */
 
-public class Artigo {
+public class Artigo implements Serializable {
     private String nome;
     private String autor;
     private Date dataInicial;
@@ -14,6 +16,10 @@ public class Artigo {
     private String statusWorkflow;
     private String destinoPublicacao;
     private String versaoAtual;
+
+    public Artigo() {
+        setDataInicial(Calendar.getInstance().getTime());
+    }
 
     public String getVersaoAtual() {
         return versaoAtual;

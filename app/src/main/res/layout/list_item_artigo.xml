@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         style="@style/Base.TextAppearance.AppCompat.Title"
-        android:text="Nome dos Artigo"/>
+        android:text="Nome do Artigo"/>
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tv_destino_publicacao"

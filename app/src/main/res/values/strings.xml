@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">ArtigosPub</string>
     <string name="action_settings">Settings</string>
-    <string name="inicio">Início:</string>
-    <string name="status">Status:</string>
+    <string name="inicio">Início</string>
+    <string name="status">Status</string>
+    <string name="title_activity_artigo_edit">Artigo - Editar</string>
+    <string name="nome_artigo">Nome do Artigo</string>
+    <string name="destino_publicacao">Destino para Publicação</string>
+    <string name="data_inicial">Data Inicial</string>
+    <string name="status_workflow">Status do Workflow</string>
+    <string name="versao_documento">Versão do Documento</string>
 </resources>
