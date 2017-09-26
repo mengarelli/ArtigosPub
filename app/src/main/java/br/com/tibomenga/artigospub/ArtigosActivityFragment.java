@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.Artigo;
@@ -27,6 +27,8 @@ import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
  */
 public class ArtigosActivityFragment extends Fragment {
     private ArtigosAdapter artigosArrayAdapter = null;
+    private LinkedList<Artigo> lstArtigos = new LinkedList<>();
+    private ListView listView;
 
     public ArtigosActivityFragment() {
     }
@@ -34,27 +36,42 @@ public class ArtigosActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        artigosArrayAdapter.clear();
-        artigosArrayAdapter.addAll(DataUtil.createFakeListArtigos(10));
+//        artigosArrayAdapter.clear();
+//        artigosArrayAdapter.addAll(DataUtil.createFakeListArtigos(10));
+        if (lstArtigos.size() == 0) {
+            lstArtigos.addAll(DataUtil.createFakeListArtigos(10));
+            artigosArrayAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_artigos, container, false);
-        artigosArrayAdapter = new ArtigosAdapter(getActivity(), new ArrayList<Artigo>());
-        final ListView listView = (ListView) rootView.findViewById(R.id.listview_artigos);
+        artigosArrayAdapter = new ArtigosAdapter(getActivity(), lstArtigos);
+        listView = (ListView) rootView.findViewById(R.id.listview_artigos);
         listView.setAdapter(artigosArrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Artigo item = (Artigo) artigosArrayAdapter.getItem(i);
-//                Toast toast = Toast.makeText(getContext(), item.getNome(), Toast.LENGTH_SHORT);
-//                toast.show();
                 Intent intent = new Intent(getActivity(), ArtigoEditActivity.class)
                         .putExtra(Intent.ACTION_ATTACH_DATA, item);
                 //startActivity(intent);
-                startActivityForResult(intent, i);
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.btn_insert);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Artigo item = new Artigo();
+                Intent intent = new Intent(getActivity(), ArtigoEditActivity.class)
+                        .putExtra(Intent.ACTION_ATTACH_DATA, item);
+                //startActivity(intent);
+                startActivityForResult(intent, 0);
+
             }
         });
 
@@ -66,8 +83,15 @@ public class ArtigosActivityFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             Artigo artigo = (Artigo) data.getSerializableExtra(Intent.ACTION_ATTACH_DATA);
-            Log.i("TT", artigo.getNome());
+            int pos = lstArtigos.indexOf(artigo);
+            if (pos >= 0) {
+                lstArtigos.set(pos, artigo);
+            } else {
+                lstArtigos.add(artigo);
+                pos = lstArtigos.size() - 1;
+            }
             artigosArrayAdapter.notifyDataSetChanged();
+            listView.setSelection(pos);
         }
     }
 

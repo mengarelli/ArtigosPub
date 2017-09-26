@@ -21,6 +21,7 @@ public class Artigo implements Serializable {
 
     public Artigo() {
         setDataInicial(Calendar.getInstance().getTime());
+        getUuid();
     }
 
     public String getUuid() {

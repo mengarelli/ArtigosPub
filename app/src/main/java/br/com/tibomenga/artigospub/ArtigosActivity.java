@@ -1,15 +1,11 @@
 package br.com.tibomenga.artigospub;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.Artigo;
 import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
 
 public class ArtigosActivity extends AppCompatActivity {
@@ -21,19 +17,6 @@ public class ArtigosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_artigos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.btn_insert);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Artigo item = new Artigo();
-                Intent intent = new Intent(ArtigosActivity.this, ArtigoEditActivity.class)
-                        .putExtra(Intent.ACTION_ATTACH_DATA, item);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
