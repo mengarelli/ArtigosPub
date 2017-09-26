@@ -15,6 +15,7 @@ import java.util.List;
 
 public class DataUtil {
     private static Context context = null;
+    private static String version = "0.01";
     public static List<Artigo> createFakeListArtigos(int quant) {
         Artigo art;
         LinkedList<Artigo> lst = new LinkedList<>();
