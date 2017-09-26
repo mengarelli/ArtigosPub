@@ -1,11 +1,13 @@
 package br.com.tibomenga.artigospub;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +53,22 @@ public class ArtigosActivityFragment extends Fragment {
 //                toast.show();
                 Intent intent = new Intent(getActivity(), ArtigoEditActivity.class)
                         .putExtra(Intent.ACTION_ATTACH_DATA, item);
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent, i);
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            Artigo artigo = (Artigo) data.getSerializableExtra(Intent.ACTION_ATTACH_DATA);
+            Log.i("TT", artigo.getNome());
+            artigosArrayAdapter.notifyDataSetChanged();
+        }
     }
 
     public class ArtigosAdapter extends ArrayAdapter<Artigo> {

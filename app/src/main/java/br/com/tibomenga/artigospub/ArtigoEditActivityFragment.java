@@ -1,5 +1,6 @@
 package br.com.tibomenga.artigospub;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.text.ParseException;
 
 import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.Artigo;
 import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
@@ -19,6 +23,7 @@ import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
  */
 public class ArtigoEditActivityFragment extends Fragment {
     private View rootView;
+    private Artigo artigo;
 
     public ArtigoEditActivityFragment() {
     }
@@ -28,12 +33,12 @@ public class ArtigoEditActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_artigo_edit, container, false);
         ((ArtigoEditActivity) getActivity()).setFragment(this);
-        Artigo artigo = (Artigo) getActivity().getIntent().getSerializableExtra(Intent.ACTION_ATTACH_DATA);
-        updateForm(artigo);
+        artigo = (Artigo) getActivity().getIntent().getSerializableExtra(Intent.ACTION_ATTACH_DATA);
+        updateForm();
         return rootView;
     }
 
-    private void updateForm(Artigo artigo) {
+    private void updateForm() {
         ((EditText) rootView.findViewById(R.id.et_nome_artigo)).setText(artigo.getNome());
         ((AutoCompleteTextView) rootView.findViewById(R.id.et_destino_publicacao)).setText(artigo.getDestinoPublicacao());
         ((EditText) rootView.findViewById(R.id.et_data_inicial)).setText(DataUtil.formatDate(artigo.getDataInicial()));
@@ -46,8 +51,24 @@ public class ArtigoEditActivityFragment extends Fragment {
     }
 
     public void readValues() {
-        String nome = ((EditText) getRootView().findViewById(R.id.et_nome_artigo)).getText().toString();
-        Snackbar.make(getRootView(), "Save: " + nome, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        try {
+            artigo.setNome(((EditText) getRootView().findViewById(R.id.et_nome_artigo)).getText().toString());
+            artigo.setDestinoPublicacao(((EditText) getRootView().findViewById(R.id.et_destino_publicacao)).getText().toString());
+            artigo.setAutor(((EditText) getRootView().findViewById(R.id.et_autor)).getText().toString());
+            artigo.setDataInicial(DataUtil.parseDate(((EditText) getRootView().findViewById(R.id.et_data_inicial)).getText().toString()));
+            artigo.setStatusWorkflow(((Spinner) getRootView().findViewById(R.id.sp_status_workflow)).getSelectedItem().toString());
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(Intent.ACTION_ATTACH_DATA, artigo);
+            getActivity().setResult(Activity.RESULT_OK, resultIntent);
+            getActivity().finish();
+            Toast toast = Toast.makeText(getContext(), "SAVE", Toast.LENGTH_SHORT);
+            toast.show();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Snackbar.make(getRootView(), getString(R.string.valor_invalido), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
     }
 }

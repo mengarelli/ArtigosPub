@@ -7,7 +7,6 @@
     android:layout_margin="@dimen/margin_small"
     >
     <TextView
-        android:id="@+id/tv_nome_artigo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -30,6 +29,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Destino"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/autor"/>
+
+    <EditText
+        android:id="@+id/et_autor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome do Artigo"/>
 
     <TextView
         android:layout_width="match_parent"

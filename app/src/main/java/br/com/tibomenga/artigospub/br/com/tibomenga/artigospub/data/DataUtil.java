@@ -3,6 +3,7 @@ package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
 import android.content.Context;
 import android.text.format.DateFormat;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -33,6 +34,10 @@ public class DataUtil {
 
     public static String formatDate(Date date) {
         return DateFormat.getDateFormat(context).format(date);
+    }
+
+    public static Date parseDate(String date) throws ParseException {
+        return DateFormat.getDateFormat(context).parse(date);
     }
 
     public static void setContext(Context appContext) {

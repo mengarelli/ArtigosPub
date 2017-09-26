@@ -9,4 +9,6 @@
     <string name="data_inicial">Data Inicial</string>
     <string name="status_workflow">Status do Workflow</string>
     <string name="versao_documento">Versão do Documento</string>
+    <string name="autor">Autor</string>
+    <string name="valor_invalido">Valor Inválido!</string>
 </resources>
