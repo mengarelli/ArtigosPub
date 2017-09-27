@@ -58,6 +58,7 @@ public class ArtigoController {
         db.beginTransaction();
         try {
             result = db.insert(ArtigoContract.ArtigoEntry.TABLE_NAME, null, values);
+            artigo.setId(result);
             if (artigo.isVersaoWorkflowChanged()) {
                 Workflow workflow = new Workflow();
                 workflow.setIdArtigo(artigo.getId());
@@ -117,8 +118,17 @@ public class ArtigoController {
 
     public int delete(Artigo artigo) {
         db = dbHelper.getWritableDatabase();
-        String where = ArtigoContract.ArtigoEntry._ID + "=" + artigo.getId();
-        int result = db.delete(ArtigoContract.ArtigoEntry.TABLE_NAME, where, null);
+        int result = RESULT_ERROR;
+        db.beginTransaction();
+        try {
+            String where = ArtigoContract.ArtigoEntry._ID + "=" + artigo.getId();
+            result = db.delete(ArtigoContract.ArtigoEntry.TABLE_NAME, where, null);
+            where = ArtigoContract.WorkflowEntry.COLUMN_NAME_ID_ARTIGO + "=" + artigo.getId();
+            result *= db.delete(ArtigoContract.WorkflowEntry.TABLE_NAME, where, null);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
         db.close();
         if (result < 0) {
             return RESULT_ERROR;
