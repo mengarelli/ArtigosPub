@@ -22,6 +22,7 @@ public class DataUtil {
     private static Context context = null;
     private static String version = "0.03";
     private static SimpleDateFormat dfmSQL = new SimpleDateFormat("yyyy-MM-dd");
+    private static SimpleDateFormat tfmSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     public static List<Artigo> createFakeListArtigos(int quant) {
         Artigo art;
         LinkedList<Artigo> lst = new LinkedList<>();
@@ -68,8 +69,16 @@ public class DataUtil {
         return DateFormat.getDateFormat(context).format(date);
     }
 
+    public static String formatDateTime(Date date) {
+        return DateFormat.getDateFormat(context).format(date) + " " + DateFormat.getTimeFormat(context).format(date);
+    }
+
     public static String formatDateSQL(Date date) {
         return dfmSQL.format(date);
+    }
+
+    public static String formatDateTimeSQL(Date date) {
+        return tfmSQL.format(date);
     }
 
     public static Date parseDate(String date) throws ParseException {
@@ -78,6 +87,20 @@ public class DataUtil {
 
     public static Date parseDateSQL(String date) throws ParseException {
         return dfmSQL.parse(date);
+    }
+
+    public static Date parseDateTimeSQL(String date) throws ParseException {
+        Date dd = null;
+        try {
+            dd = tfmSQL.parse(date);
+        } catch (ParseException e) {
+            try {
+                dd = dfmSQL.parse(date);
+            } catch (ParseException e1) {
+                throw e;
+            }
+        }
+        return dd;
     }
 
     public static void setContext(Context appContext) {

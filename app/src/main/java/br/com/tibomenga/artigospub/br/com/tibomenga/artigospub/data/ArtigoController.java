@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_AUTOR;
@@ -28,8 +29,10 @@ public class ArtigoController {
     public static final int RESULT_OK = 0;
     private SQLiteDatabase db;
     private ArtigoContract.ArtigoDbHelper dbHelper;
+    private Context context;
 
     public ArtigoController(Context context) {
+        this.context = context;
         dbHelper = new ArtigoContract.ArtigoDbHelper(context);
     }
 
@@ -51,7 +54,22 @@ public class ArtigoController {
         values.put(COLUMN_NAME_NOME, artigo.getNome());
         values.put(COLUMN_NAME_STATUS_WORKFLOW, artigo.getStatusWorkflow());
         values.put(COLUMN_NAME_VERSAO_ATUAL, artigo.getVersaoAtual());
-        long result = db.insert(ArtigoContract.ArtigoEntry.TABLE_NAME, null, values);
+        long result = RESULT_ERROR;
+        db.beginTransaction();
+        try {
+            result = db.insert(ArtigoContract.ArtigoEntry.TABLE_NAME, null, values);
+            if (artigo.isVersaoWorkflowChanged()) {
+                Workflow workflow = new Workflow();
+                workflow.setIdArtigo(artigo.getId());
+                workflow.setDataStatus(Calendar.getInstance().getTime());
+                workflow.setVersaoAtual(artigo.getVersaoAtual());
+                workflow.setStatusWorkflow(artigo.getStatusWorkflow());
+                WorkflowController.insert(workflow, false, db);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
         db.close();
         if (result < 0) {
             return RESULT_ERROR;
@@ -73,7 +91,22 @@ public class ArtigoController {
         values.put(COLUMN_NAME_STATUS_WORKFLOW, artigo.getStatusWorkflow());
         values.put(COLUMN_NAME_VERSAO_ATUAL, artigo.getVersaoAtual());
         String where = ArtigoContract.ArtigoEntry._ID + "=" + artigo.getId();
-        int result = db.update(ArtigoContract.ArtigoEntry.TABLE_NAME, values, where, null);
+        int result = RESULT_ERROR;
+        db.beginTransaction();
+        try {
+            result = db.update(ArtigoContract.ArtigoEntry.TABLE_NAME, values, where, null);
+            if (artigo.isVersaoWorkflowChanged()) {
+                Workflow workflow = new Workflow();
+                workflow.setIdArtigo(artigo.getId());
+                workflow.setDataStatus(Calendar.getInstance().getTime());
+                workflow.setVersaoAtual(artigo.getVersaoAtual());
+                workflow.setStatusWorkflow(artigo.getStatusWorkflow());
+                WorkflowController.insert(workflow, false, db);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
         db.close();
         if (result < 0) {
             return RESULT_ERROR;
@@ -94,10 +127,27 @@ public class ArtigoController {
         }
     }
 
+    public String[] listDestinosPublicacao() {
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " + ArtigoContract.ArtigoEntry.COLUMN_NAME_DESTINO_PUBLICACAO +
+                " FROM " + ArtigoContract.ArtigoEntry.TABLE_NAME, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            ArrayList<String> lst = new ArrayList<>(cursor.getCount());
+            for (int i = 0; i < cursor.getCount(); i++) {
+                lst.add(cursor.getString(0));
+                cursor.moveToNext();
+            }
+            return lst.toArray(new String[] {});
+        } else {
+            return new String[] {};
+        }
+    }
+
     public List<Artigo> list() {
         String[] fields = ArtigoContract.ArtigoEntry.TODOS;
         db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(ArtigoContract.ArtigoEntry.TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(ArtigoContract.ArtigoEntry.TABLE_NAME, fields, null, null, null, null, null);
         ArrayList<Artigo> lst = new ArrayList<>();
         if (cursor != null) {
             cursor.moveToFirst();

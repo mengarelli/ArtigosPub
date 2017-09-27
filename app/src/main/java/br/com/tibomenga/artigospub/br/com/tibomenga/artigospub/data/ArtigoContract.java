@@ -5,16 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_AUTOR;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_COMENTARIOS;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DATA_INICIAL;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DATA_LIMITE;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DESTINO_PUBLICACAO;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_NOME;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_STATUS_WORKFLOW;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_VERSAO_ATUAL;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.TABLE_NAME;
-
 /**
  * Created by menga on 26/09/17.
  */
@@ -40,26 +30,50 @@ public class ArtigoContract {
 
     }
 
+    public static class WorkflowEntry implements BaseColumns {
+        public static final String TABLE_NAME = "workflow";
+        public static final String _ID = "id_workflow";
+        public static final String COLUMN_NAME_ID_ARTIGO = "id_artigo";
+        public static final String COLUMN_NAME_STATUS_WORKFLOW = "status_workflow";
+        public static final String COLUMN_NAME_DATA_STATUS = "data_status";
+        public static final String COLUMN_NAME_VERSAO_ATUAL = "versao_atual";
+
+        public static final String[] TODOS = {_ID, COLUMN_NAME_ID_ARTIGO, COLUMN_NAME_STATUS_WORKFLOW,
+                COLUMN_NAME_DATA_STATUS, COLUMN_NAME_VERSAO_ATUAL};
+
+    }
+
     // Declarations
     private static final String TEXT_TYPE = " TEXT";
     private static final String COMMA_SEP = ",";
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TABLE_NAME + " (" +
+    private static final String SQL_CREATE_ARTIGOS =
+            "CREATE TABLE " + ArtigoEntry.TABLE_NAME + " (" +
                     ArtigoEntry._ID + " INTEGER PRIMARY KEY," +
-                    COLUMN_NAME_NOME + TEXT_TYPE + COMMA_SEP +
-                    COLUMN_NAME_DESTINO_PUBLICACAO + TEXT_TYPE + COMMA_SEP +
-                    COLUMN_NAME_AUTOR + TEXT_TYPE + COMMA_SEP +
-                    COLUMN_NAME_DATA_INICIAL + TEXT_TYPE + COMMA_SEP +
-                    COLUMN_NAME_DATA_LIMITE + TEXT_TYPE + COMMA_SEP +
-                    COLUMN_NAME_COMENTARIOS + TEXT_TYPE + COMMA_SEP +
-                    COLUMN_NAME_STATUS_WORKFLOW + " INTEGER" + COMMA_SEP +
-                    COLUMN_NAME_VERSAO_ATUAL + TEXT_TYPE + " )";
+                    ArtigoEntry.COLUMN_NAME_NOME + TEXT_TYPE + COMMA_SEP +
+                    ArtigoEntry.COLUMN_NAME_DESTINO_PUBLICACAO + TEXT_TYPE + COMMA_SEP +
+                    ArtigoEntry.COLUMN_NAME_AUTOR + TEXT_TYPE + COMMA_SEP +
+                    ArtigoEntry.COLUMN_NAME_DATA_INICIAL + TEXT_TYPE + COMMA_SEP +
+                    ArtigoEntry.COLUMN_NAME_DATA_LIMITE + TEXT_TYPE + COMMA_SEP +
+                    ArtigoEntry.COLUMN_NAME_COMENTARIOS + TEXT_TYPE + COMMA_SEP +
+                    ArtigoEntry.COLUMN_NAME_STATUS_WORKFLOW + " INTEGER" + COMMA_SEP +
+                    ArtigoEntry.COLUMN_NAME_VERSAO_ATUAL + TEXT_TYPE + " )";
 
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + TABLE_NAME;
+    private static final String SQL_CREATE_WORKFLOW =
+            "CREATE TABLE " + WorkflowEntry.TABLE_NAME + " (" +
+                    WorkflowEntry._ID + " INTEGER PRIMARY KEY," +
+                    WorkflowEntry.COLUMN_NAME_ID_ARTIGO + " INTEGER" + COMMA_SEP +
+                    WorkflowEntry.COLUMN_NAME_STATUS_WORKFLOW + " INTEGER" + COMMA_SEP +
+                    WorkflowEntry.COLUMN_NAME_DATA_STATUS + TEXT_TYPE + COMMA_SEP +
+                    WorkflowEntry.COLUMN_NAME_VERSAO_ATUAL + TEXT_TYPE + " )";
+
+    private static final String SQL_DELETE_ARTIGOS =
+            "DROP TABLE IF EXISTS " + ArtigoEntry.TABLE_NAME;
+
+    private static final String SQL_DELETE_WORKFLOW =
+            "DROP TABLE IF EXISTS " + WorkflowEntry.TABLE_NAME;
 
     public static class ArtigoDbHelper extends SQLiteOpenHelper {
-        public static final int DATABASE_VERSION = 1;
+        public static final int DATABASE_VERSION = 2;
         public static final String DATABASE_NAME = "artigos.db";
 
         public ArtigoDbHelper(Context context) {
@@ -68,12 +82,14 @@ public class ArtigoContract {
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
+            sqLiteDatabase.execSQL(SQL_CREATE_ARTIGOS);
+            sqLiteDatabase.execSQL(SQL_CREATE_WORKFLOW);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-            sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(SQL_DELETE_ARTIGOS);
+            sqLiteDatabase.execSQL(SQL_DELETE_WORKFLOW);
             onCreate(sqLiteDatabase);
         }
 

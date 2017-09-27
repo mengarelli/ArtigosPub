@@ -16,12 +16,16 @@ public class Artigo implements Serializable {
     private Date dataLimite;
     private String comentarios;
     private int statusWorkflow;
+    private Integer statusWorkflowSombra = null;
     private String destinoPublicacao;
     private String versaoAtual;
+    private String versaoAtualSombra = null;
 
     public Artigo() {
         setDataInicial(Calendar.getInstance().getTime());
         setDataLimite(Calendar.getInstance().getTime());
+        versaoAtual = "";
+        statusWorkflow = 0;
     }
 
     public long getId() {
@@ -37,6 +41,9 @@ public class Artigo implements Serializable {
     }
 
     public void setVersaoAtual(String versaoAtual) {
+        if (versaoAtualSombra == null) {
+            versaoAtualSombra = this.versaoAtual;
+        }
         this.versaoAtual = versaoAtual;
     }
 
@@ -82,7 +89,12 @@ public class Artigo implements Serializable {
 
     public int getStatusWorkflow() { return statusWorkflow; }
 
-    public void setStatusWorkflow(int statusWorkflow) { this.statusWorkflow = statusWorkflow; }
+    public void setStatusWorkflow(int statusWorkflow) {
+        if (statusWorkflowSombra == null) {
+            this.statusWorkflowSombra = this.statusWorkflow;
+        }
+        this.statusWorkflow = statusWorkflow;
+    }
 
     public String getDestinoPublicacao() {
         return destinoPublicacao;
@@ -90,6 +102,17 @@ public class Artigo implements Serializable {
 
     public void setDestinoPublicacao(String destinoPublicacao) {
         this.destinoPublicacao = destinoPublicacao;
+    }
+
+    public boolean isVersaoWorkflowChanged() {
+        boolean result = false;
+        if ((statusWorkflowSombra != null) && (statusWorkflowSombra != statusWorkflow)) {
+            result = true;
+        }
+        if ((versaoAtualSombra != null) && (!versaoAtualSombra.equals(versaoAtual))) {
+            result = true;
+        }
+        return result;
     }
 
     @Override

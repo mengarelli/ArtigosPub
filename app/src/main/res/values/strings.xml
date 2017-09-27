@@ -36,4 +36,7 @@
     <string name="filter">Pesquisa</string>
     <string name="clear_filter">Limpar</string>
     <string name="discard">Descartar</string>
+    <string name="novo_workflow">Nova Versão/Workflow</string>
+    <string name="confirm_novo_workflow">A versão e/ou o workflow foram alterados. Confirma a geração de um novo registro?</string>
+    <string name="data_status">Data de Registro</string>
 </resources>

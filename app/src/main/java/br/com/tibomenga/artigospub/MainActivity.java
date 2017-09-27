@@ -23,26 +23,44 @@ import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
 import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ISearchable;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private Fragment currentFragment;
+    private Fragment currentFragment = null;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataUtil.setContext(getApplicationContext());
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        goHome();
+        if (getIntent() != null) {
+            if (WorkflowActivityFragment.class.getSimpleName().equalsIgnoreCase(getIntent().getStringExtra("KEY"))) {
+                go(new WorkflowActivityFragment(), "Workflow");
+            }
+        }
+        if (currentFragment == null) {
+            goHome();
+        }
         handleIntent(getIntent());
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        // check if search intent
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            intent.putExtra("KEY", currentFragment.getClass().getSimpleName());
+        }
+        super.startActivity(intent);
     }
 
     @Override
@@ -92,15 +110,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void go(Fragment fragment) {
+    public void go(Fragment fragment, String subtitle) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame, fragment);
         transaction.commit();
         currentFragment = fragment;
+        toolbar.setSubtitle(subtitle);
     }
 
     public void goHome() {
-        go(new ArtigosActivityFragment());
+        go(new ArtigosActivityFragment(), "Artigos");
     }
 
     @Override
@@ -122,17 +141,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        String subtitle = null;
         Fragment fragment = null;
         if (id == R.id.nav_artigos) {
+            subtitle = "Artigos";
             fragment = new ArtigosActivityFragment();
         } else if (id == R.id.nav_workflow) {
-
+            subtitle = "Workflow";
+            fragment = new WorkflowActivityFragment();
         } else if (id == R.id.nav_quit) {
             quit();
         }
 
         if (fragment != null) {
-            go(fragment);
+            go(fragment, subtitle);
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return true;
