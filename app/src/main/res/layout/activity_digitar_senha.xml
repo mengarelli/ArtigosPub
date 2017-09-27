@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    tools:context="br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.DigitarSenhaActivity">
+    <!--android:gravity="center"-->
+
+    <TextView
+        android:id="@+id/editTextDigiteaSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="none"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:text="Entre com a senha" />
+
+    <com.goodiebag.pinview.Pinview
+        android:id="@+id/pinView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pinView1"
+        android:layout_marginTop="70dp"
+        app:cursorVisible="false"
+        app:forceKeyboard="true"
+        app:hint="0"
+        app:inputType="number"
+        app:password="false"
+        app:pinHeight="40dp"
+        app:pinLength="4"
+        app:pinWidth="40dp" />
+
+    <Button
+        android:id="@+id/btnLogar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logar" />
+
+    <Button
+        android:id="@+id/btnEsqueciSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Esqueci a senha" />
+</LinearLayout>

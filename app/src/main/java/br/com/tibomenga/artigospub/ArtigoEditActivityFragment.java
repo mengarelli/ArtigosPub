@@ -18,9 +18,9 @@ import android.widget.Spinner;
 
 import java.text.ParseException;
 
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.Artigo;
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoController;
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
+import br.com.tibomenga.artigospub.data.Artigo;
+import br.com.tibomenga.artigospub.data.ArtigoController;
+import br.com.tibomenga.artigospub.data.DataUtil;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,9 +38,15 @@ public class ArtigoEditActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_artigo_edit, container, false);
         ((ArtigoEditActivity) getActivity()).setFragment(this);
+        // Autocomplete Destino
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, new ArtigoController(getContext()).listDestinosPublicacao());
         ((AutoCompleteTextView) rootView.findViewById(R.id.et_destino_publicacao)).setAdapter(adapter);
+        // Autocomplete Autor
+        ArrayAdapter<String> adapterAutor = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, new ArtigoController(getContext()).listAutores());
+        ((AutoCompleteTextView) rootView.findViewById(R.id.et_autor)).setAdapter(adapterAutor);
+        // Artigo
         artigo = (Artigo) getActivity().getIntent().getSerializableExtra(Intent.ACTION_ATTACH_DATA);
         Log.i(LOG_TAG, artigo.toString());
         updateForm();
@@ -50,7 +56,7 @@ public class ArtigoEditActivityFragment extends Fragment {
     private void updateForm() {
         ((EditText) rootView.findViewById(R.id.et_nome_artigo)).setText(artigo.getNome());
         ((AutoCompleteTextView) rootView.findViewById(R.id.et_destino_publicacao)).setText(artigo.getDestinoPublicacao());
-        ((EditText) rootView.findViewById(R.id.et_autor)).setText(artigo.getAutor());
+        ((AutoCompleteTextView) rootView.findViewById(R.id.et_autor)).setText(artigo.getAutor());
         ((EditText) rootView.findViewById(R.id.et_data_inicial)).setText(DataUtil.formatDate(artigo.getDataInicial()));
         ((EditText) rootView.findViewById(R.id.et_data_limite)).setText(DataUtil.formatDate(artigo.getDataLimite()));
         Spinner sp = ((Spinner) rootView.findViewById(R.id.sp_status_workflow));

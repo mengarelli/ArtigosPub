@@ -5,8 +5,11 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -19,8 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ISearchable;
+import br.com.tibomenga.artigospub.data.DataUtil;
+import br.com.tibomenga.artigospub.data.ISearchable;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Fragment currentFragment = null;
@@ -48,10 +51,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 go(new WorkflowActivityFragment(), "Workflow");
             }
         }
-        if (currentFragment == null) {
-            goHome();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String password = sharedPrefs.getString("password","");
+        if (password.equalsIgnoreCase("")) {
+            Intent intent = new Intent(getApplicationContext(), CriarSenhaActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            if (currentFragment == null) {
+                goHome();
+            }
+            handleIntent(getIntent());
         }
-        handleIntent(getIntent());
     }
 
     @Override
@@ -128,9 +139,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(getApplicationContext(), CriarSenhaActivity.class);
+            startActivity(intent);
+            finish();
             return true;
-//        } else if (id == R.id.action_search) {
-//            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -170,7 +182,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+                        ActivityCompat.finishAffinity(MainActivity.this);
+//                        Intent  it = new Intent(getApplicationContext(), CarregandoActivity.class);
+//                        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        it.putExtra("SAIR", true);
+//                        startActivity(it);
+//                        finish();
+//                        android.os.Process.killProcess(android.os.Process.myPid());
                     }
 
                 })

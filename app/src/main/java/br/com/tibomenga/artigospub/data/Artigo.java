@@ -1,4 +1,4 @@
-package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
+package br.com.tibomenga.artigospub.data;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -24,8 +24,6 @@ public class Artigo implements Serializable {
     public Artigo() {
         setDataInicial(Calendar.getInstance().getTime());
         setDataLimite(Calendar.getInstance().getTime());
-        versaoAtual = "";
-        statusWorkflow = 0;
     }
 
     public long getId() {
@@ -41,10 +39,10 @@ public class Artigo implements Serializable {
     }
 
     public void setVersaoAtual(String versaoAtual) {
+        this.versaoAtual = versaoAtual;
         if (versaoAtualSombra == null) {
             versaoAtualSombra = this.versaoAtual;
         }
-        this.versaoAtual = versaoAtual;
     }
 
     public String getNome() {
@@ -90,10 +88,10 @@ public class Artigo implements Serializable {
     public int getStatusWorkflow() { return statusWorkflow; }
 
     public void setStatusWorkflow(int statusWorkflow) {
+        this.statusWorkflow = statusWorkflow;
         if (statusWorkflowSombra == null) {
             this.statusWorkflowSombra = this.statusWorkflow;
         }
-        this.statusWorkflow = statusWorkflow;
     }
 
     public String getDestinoPublicacao() {
@@ -128,6 +126,13 @@ public class Artigo implements Serializable {
                 ", destinoPublicacao='" + destinoPublicacao + '\'' +
                 ", versaoAtual='" + versaoAtual + '\'' +
                 '}';
+    }
+
+    public String toStringSearch() {
+        return nome + autor + DataUtil.formatDate(dataInicial) +
+                DataUtil.formatDate(dataLimite) + comentarios +
+                DataUtil.getWorkflowDescription(statusWorkflow) +
+                destinoPublicacao + versaoAtual;
     }
 
     @Override

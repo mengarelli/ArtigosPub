@@ -1,4 +1,4 @@
-package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
+package br.com.tibomenga.artigospub.data;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -23,6 +23,16 @@ public class DataUtil {
     private static String version = "0.03";
     private static SimpleDateFormat dfmSQL = new SimpleDateFormat("yyyy-MM-dd");
     private static SimpleDateFormat tfmSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    private static boolean avisos = true;
+
+    public static boolean isAvisos() {
+        return avisos;
+    }
+
+    public static void setAvisos(boolean avisos) {
+        DataUtil.avisos = avisos;
+    }
+
     public static List<Artigo> createFakeListArtigos(int quant) {
         Artigo art;
         LinkedList<Artigo> lst = new LinkedList<>();

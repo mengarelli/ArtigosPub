@@ -1,4 +1,4 @@
-package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
+package br.com.tibomenga.artigospub.data;
 
 /**
  * Created by menga on 26/09/17.

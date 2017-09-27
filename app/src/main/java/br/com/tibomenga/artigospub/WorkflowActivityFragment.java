@@ -17,10 +17,10 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ISearchable;
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.Workflow;
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.WorkflowController;
+import br.com.tibomenga.artigospub.data.DataUtil;
+import br.com.tibomenga.artigospub.data.ISearchable;
+import br.com.tibomenga.artigospub.data.Workflow;
+import br.com.tibomenga.artigospub.data.WorkflowController;
 
 /**
  * A placeholder fragment containing a simple view.

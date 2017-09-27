@@ -1,4 +1,4 @@
-package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
+package br.com.tibomenga.artigospub.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_AUTOR;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_COMENTARIOS;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DATA_INICIAL;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DATA_LIMITE;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DESTINO_PUBLICACAO;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_NOME;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_STATUS_WORKFLOW;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_VERSAO_ATUAL;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry._ID;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_AUTOR;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_COMENTARIOS;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DATA_INICIAL;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DATA_LIMITE;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_DESTINO_PUBLICACAO;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_NOME;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_STATUS_WORKFLOW;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry.COLUMN_NAME_VERSAO_ATUAL;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.ArtigoEntry._ID;
 
 /**
  * Created by menga on 26/09/17.
@@ -154,10 +154,27 @@ public class ArtigoController {
         }
     }
 
+    public String[] listAutores() {
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " + ArtigoContract.ArtigoEntry.COLUMN_NAME_AUTOR +
+                " FROM " + ArtigoContract.ArtigoEntry.TABLE_NAME, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            ArrayList<String> lst = new ArrayList<>(cursor.getCount());
+            for (int i = 0; i < cursor.getCount(); i++) {
+                lst.add(cursor.getString(0));
+                cursor.moveToNext();
+            }
+            return lst.toArray(new String[] {});
+        } else {
+            return new String[] {};
+        }
+    }
+
     public List<Artigo> list() {
         String[] fields = ArtigoContract.ArtigoEntry.TODOS;
         db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(ArtigoContract.ArtigoEntry.TABLE_NAME, fields, null, null, null, null, null);
+        Cursor cursor = db.query(ArtigoContract.ArtigoEntry.TABLE_NAME, fields, null, null, null, null, ArtigoContract.ArtigoEntry.COLUMN_NAME_DATA_LIMITE);
         ArrayList<Artigo> lst = new ArrayList<>();
         if (cursor != null) {
             cursor.moveToFirst();

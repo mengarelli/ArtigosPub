@@ -1,4 +1,4 @@
-package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
+package br.com.tibomenga.artigospub.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

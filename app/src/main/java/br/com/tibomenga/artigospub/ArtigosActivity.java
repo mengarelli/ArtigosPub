@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.DataUtil;
+import br.com.tibomenga.artigospub.data.DataUtil;
 
 public class ArtigosActivity extends AppCompatActivity {
 

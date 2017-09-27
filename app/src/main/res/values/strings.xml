@@ -39,4 +39,8 @@
     <string name="novo_workflow">Nova Versão/Workflow</string>
     <string name="confirm_novo_workflow">A versão e/ou o workflow foram alterados. Confirma a geração de um novo registro?</string>
     <string name="data_status">Data de Registro</string>
+    <string name="action_change_password">Redefinir Senha</string>
+    <string name="ok">Ok</string>
+    <string name="artigos_data_limite">Artigos na Data Limite</string>
+    <string name="artigos_no_limite_7_dias">artigo(s) deve(m) ser entregue(s) nos próximos 7 dias.</string>
 </resources>

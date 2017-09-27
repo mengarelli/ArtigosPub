@@ -1,127 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fr_artigo_edit"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_small"
-    >
+    android:orientation="vertical">
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/nome_artigo"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/nome_artigo" />
 
-    <EditText
-        android:id="@+id/et_nome_artigo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nome do Artigo"/>
+            <EditText
+                android:id="@+id/et_nome_artigo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome do Artigo" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/destino_publicacao"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/destino_publicacao" />
 
-    <AutoCompleteTextView
-        android:id="@+id/et_destino_publicacao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Destino"/>
+            <AutoCompleteTextView
+                android:id="@+id/et_destino_publicacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Destino" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/autor"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/autor" />
 
-    <EditText
-        android:id="@+id/et_autor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nome do Artigo"/>
+            <AutoCompleteTextView
+                android:id="@+id/et_autor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome do Artigo" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/data_inicial"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/data_inicial" />
 
-    <EditText
-        android:id="@+id/et_data_inicial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:text="dd/MM/yyyy"/>
+            <EditText
+                android:id="@+id/et_data_inicial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:text="dd/MM/yyyy" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/data_limite"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/data_limite" />
 
-    <EditText
-        android:id="@+id/et_data_limite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:text="dd/MM/yyyy"/>
+            <EditText
+                android:id="@+id/et_data_limite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:text="dd/MM/yyyy" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/status_workflow"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/status_workflow" />
 
-    <Spinner
-        android:id="@+id/sp_status_workflow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/workflow_entries"
-        />
+            <Spinner
+                android:id="@+id/sp_status_workflow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/workflow_entries" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/versao_documento"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/versao_documento" />
 
-    <EditText
-        android:id="@+id/et_versao_atual"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="DocumentoX.doc"/>
+            <EditText
+                android:id="@+id/et_versao_atual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DocumentoX.doc" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/comentarios"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/comentarios" />
 
-    <EditText
-        android:id="@+id/et_comentarios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minLines="3"
-        android:maxLines="10"
-        android:gravity="top|left"
-        android:scrollbars="vertical"
-        android:text="Bla bla bla"/>
+            <EditText
+                android:id="@+id/et_comentarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|left"
+                android:maxLines="10"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="Bla bla bla" />
 
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data;
+package br.com.tibomenga.artigospub.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,11 +10,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_DATA_STATUS;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_ID_ARTIGO;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_STATUS_WORKFLOW;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_VERSAO_ATUAL;
-import static br.com.tibomenga.artigospub.br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry._ID;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_DATA_STATUS;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_ID_ARTIGO;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_STATUS_WORKFLOW;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry.COLUMN_NAME_VERSAO_ATUAL;
+import static br.com.tibomenga.artigospub.data.ArtigoContract.WorkflowEntry._ID;
 
 /**
  * Created by menga on 26/09/17.
